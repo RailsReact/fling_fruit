@@ -16,6 +16,7 @@ class Body extends React.Component {
   render(){
     return(
       <div>
+        <NewFruit />
         <AllFruits fruits={this.state.fruits} />
       </div>
     )
