@@ -7,6 +7,26 @@ class Body extends React.Component {
     }
     this.handlerFormSubmit = this.handlerFormSubmit.bind(this)
     this.addNewFruit = this.addNewFruit.bind(this)
+    this.handlerDelete= this.handlerDelete.bind(this)
+    this.deleteFruit= this.deleteFruit.bind(this)
+  }
+
+  handlerDelete(id){
+    fetch(`http://localhost:3000/api/v1/fruits/${id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response)=>{
+      this.deleteFruit(id)
+    })
+  }
+
+  deleteFruit(id){
+    newFruits = this.state.fruits.filter((fruit)=> fruit.id !==id);
+    this.setState({
+      fruits: newFruits
+    })
   }
 
   handlerFormSubmit(name, description){
@@ -43,7 +63,10 @@ class Body extends React.Component {
         <NewFruit 
           handlerFormSubmit = {this.handlerFormSubmit}
         />
-        <AllFruits fruits={this.state.fruits} />
+        <AllFruits 
+          fruits={this.state.fruits} 
+          handlerDelete={this.handlerDelete}
+        />
       </div>
     )
   }
