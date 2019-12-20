@@ -6,6 +6,7 @@ const AllFruits = (props) =>  {
         <Fruit 
           fruit={fruit} 
           handlerDelete={props.handlerDelete}
+          handlerUpdate={props.handlerUpdate}
         />
       </div>
     )

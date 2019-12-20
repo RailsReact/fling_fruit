@@ -7,8 +7,32 @@ class Body extends React.Component {
     }
     this.handlerFormSubmit = this.handlerFormSubmit.bind(this)
     this.addNewFruit = this.addNewFruit.bind(this)
+
     this.handlerDelete= this.handlerDelete.bind(this)
     this.deleteFruit= this.deleteFruit.bind(this)
+
+    this.handlerUpdate = this.handlerUpdate.bind(this)
+    this.updateFruit = this.updateFruit.bind(this)
+  }
+
+  handlerUpdate(fruit){
+    fetch(`http://localhost:3000/api/v1/fruits/${fruit.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({fruit: fruit}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response)=>{
+      this.updateFruit(fruit)
+    })
+  }
+
+  updateFruit(fruit){
+    let newFruits = this.state.fruits.filter((f)=> f.id !== fruit.id);
+    newFruits.push(fruit)
+    this.setState({
+      fruits: newFruits
+    })
   }
 
   handlerDelete(id){
@@ -66,6 +90,7 @@ class Body extends React.Component {
         <AllFruits 
           fruits={this.state.fruits} 
           handlerDelete={this.handlerDelete}
+          handlerUpdate={this.handlerUpdate}
         />
       </div>
     )
